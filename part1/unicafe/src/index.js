@@ -5,17 +5,25 @@ import "./index.css";
 const Statistics = (props) => {
   const { good, neutral, bad, all, average, positive } = props;
 
-  return (
-    <div>
-      <p>Good {good}</p>
-      <p>Bad {bad}</p>
-      <p>Neutral {neutral}</p>
+  if (all === 0) {
+    return (
+      <div>
+        <p>No feedback given</p>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <p>Good {good}</p>
+        <p>Bad {bad}</p>
+        <p>Neutral {neutral}</p>
 
-      <p>All {all}</p>
-      <p>Average {average}</p>
-      <p>Positive {(positive / all) * 100}%</p>
-    </div>
-  );
+        <p>All {all}</p>
+        <p>Average {average}</p>
+        <p>Positive {(positive / all) * 100}%</p>
+      </div>
+    );
+  }
 };
 
 const App = () => {
