@@ -8,7 +8,7 @@ const StatisticView = ({ stats }) => {
   for (let i = 0; i < stats.length; i++) {
     stat_views.push(
       <p>
-        {stats[i].name} {stats[i].count}
+        {stats[i].key} {stats[i].count}
       </p>
     );
   }
@@ -16,24 +16,61 @@ const StatisticView = ({ stats }) => {
   return stat_views;
 };
 
+const GlobalStatistics = (props) => {
+  const { all, average, positive } = props;
+
+  return (
+    <div>
+      <p>All {all}</p>
+      <p>Average {average}</p>
+      <p>Positive {(positive / all) * 100}%</p>
+    </div>
+  );
+};
+
 const App = () => {
   const [good, setGood] = useState(0);
   const [bad, setBad] = useState(0);
   const [neutral, setNeutral] = useState(0);
+  const [average, setAverage] = useState(0);
+  const [all, setAll] = useState(0);
+  const [positive, setPositive] = useState(0);
+
+  const calculateAverage = (all, good, bad) => {
+    return (good - bad) / all;
+  };
+
+  const onGoodClick = () => {
+    setGood(good + 1);
+    setAll(all + 1);
+    setPositive(positive + 1);
+    setAverage(calculateAverage(all, good, bad));
+  };
+
+  const onBadClick = () => {
+    setBad(bad + 1);
+    setAll(all + 1);
+    setAverage(calculateAverage(all, good, bad));
+  };
+
+  const onNeutralClick = () => {
+    setNeutral(neutral + 1);
+    setAll(all + 1);
+  };
 
   return (
     <div>
       <h1>Give Feedback</h1>
 
-      <button id="btnGood" onClick={() => setGood(good + 1)}>
+      <button id="btnGood" onClick={onGoodClick}>
         Good
       </button>
 
-      <button id="btnNeutral" onClick={() => setNeutral(neutral + 1)}>
+      <button id="btnNeutral" onClick={onNeutralClick}>
         Neutral
       </button>
 
-      <button id="btnBad" onClick={() => setBad(bad + 1)}>
+      <button id="btnBad" onClick={onBadClick}>
         Bad
       </button>
 
@@ -41,19 +78,21 @@ const App = () => {
       <StatisticView
         stats={[
           {
-            name: "good",
+            key: "good",
             count: good,
           },
           {
-            name: "bad",
+            key: "bad",
             count: bad,
           },
           {
-            name: "neutral",
+            key: "neutral",
             count: neutral,
           },
         ]}
       />
+
+      <GlobalStatistics all={all} average={average} positive={positive} />
     </div>
   );
 };
