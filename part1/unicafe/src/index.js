@@ -2,25 +2,15 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 
-const StatisticView = ({ stats }) => {
-  const stat_views = [];
-
-  for (let i = 0; i < stats.length; i++) {
-    stat_views.push(
-      <p>
-        {stats[i].key} {stats[i].count}
-      </p>
-    );
-  }
-
-  return stat_views;
-};
-
-const GlobalStatistics = (props) => {
-  const { all, average, positive } = props;
+const Statistics = (props) => {
+  const { good, neutral, bad, all, average, positive } = props;
 
   return (
     <div>
+      <p>Good {good}</p>
+      <p>Bad {bad}</p>
+      <p>Neutral {neutral}</p>
+
       <p>All {all}</p>
       <p>Average {average}</p>
       <p>Positive {(positive / all) * 100}%</p>
@@ -74,25 +64,14 @@ const App = () => {
         Bad
       </button>
 
-      <h1>Statistics</h1>
-      <StatisticView
-        stats={[
-          {
-            key: "good",
-            count: good,
-          },
-          {
-            key: "bad",
-            count: bad,
-          },
-          {
-            key: "neutral",
-            count: neutral,
-          },
-        ]}
+      <Statistics
+        good={good}
+        bad={bad}
+        neutral={neutral}
+        all={all}
+        average={average}
+        positive={positive}
       />
-
-      <GlobalStatistics all={all} average={average} positive={positive} />
     </div>
   );
 };
