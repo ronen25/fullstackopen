@@ -4,8 +4,16 @@ import "./index.css";
 
 const App = (props) => {
   const [selected, setSelected] = useState(0);
+  const [anecdotes, setAnecdotes] = useState(props.anecdotes);
 
-  const onDisplayClicked = () => {
+  const onVoteClicked = () => {
+    // Increase the votes
+    const newAnecdotes = [...anecdotes];
+    newAnecdotes[selected].votes++;
+    setAnecdotes(newAnecdotes);
+  };
+
+  const onNextAnecdote = () => {
     setSelected(Math.floor(Math.random() * anecdotes.length));
   };
 
@@ -13,22 +21,29 @@ const App = (props) => {
     <div>
       <h1>Anecdote</h1>
 
-      <button id="btnDisplay" onClick={onDisplayClicked}>
-        Display
+      <button id="btnVote" onClick={onVoteClicked}>
+        Vote
       </button>
 
-      <p>{props.anecdotes[selected]}</p>
+      <button id="btnNextAnecdote" onClick={onNextAnecdote}>
+        Next Anecdote
+      </button>
+
+      <p>
+        <b>Votes cast: {anecdotes[selected].votes}</b>
+      </p>
+      <p>{anecdotes[selected].anecode}</p>
     </div>
   );
 };
 
 const anecdotes = [
-  "If it hurts, do it more often",
-  "Adding manpower to a late software project makes it later!",
-  "The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.",
-  "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
-  "Premature optimization is the root of all evil.",
-  "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
+  { anecode: "If it hurts, do it more often", votes: 0 },
+  { anecode: "Adding manpower to a late software project makes it later!", votes: 0 },
+  { anecode: "The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.", votes: 0 },
+  { anecode: "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.", votes: 0 },
+  { anecode: "Premature optimization is the root of all evil.", votes: 0 },
+  { anecode: "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.", votes: 0 }
 ];
 
 ReactDOM.render(
