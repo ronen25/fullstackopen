@@ -4,12 +4,18 @@ import "./index.css";
 
 const App = (props) => {
   const [selected, setSelected] = useState(0);
+  const [maxVotesIndex, setMaxVotesIndex] = useState(0);
   const [anecdotes, setAnecdotes] = useState(props.anecdotes);
 
   const onVoteClicked = () => {
-    // Increase the votes
     const newAnecdotes = [...anecdotes];
+
     newAnecdotes[selected].votes++;
+
+    // Set new max index if needed
+    if (newAnecdotes[selected].votes > newAnecdotes[maxVotesIndex].votes)
+      setMaxVotesIndex(selected);
+
     setAnecdotes(newAnecdotes);
   };
 
@@ -19,7 +25,12 @@ const App = (props) => {
 
   return (
     <div>
-      <h1>Anecdote</h1>
+      <h1>Anecdote of the day</h1>
+
+      <p>{anecdotes[selected].anecode}</p>
+      <p>
+        <b>Votes cast: {anecdotes[selected].votes}</b>
+      </p>
 
       <button id="btnVote" onClick={onVoteClicked}>
         Vote
@@ -29,10 +40,13 @@ const App = (props) => {
         Next Anecdote
       </button>
 
+      <h1>
+        Anecdote with the most votes
+      </h1>
+      <p>{anecdotes[maxVotesIndex].anecode}</p>
       <p>
-        <b>Votes cast: {anecdotes[selected].votes}</b>
+        <b>Votes cast: {anecdotes[maxVotesIndex].votes}</b>
       </p>
-      <p>{anecdotes[selected].anecode}</p>
     </div>
   );
 };
