@@ -49,7 +49,7 @@ const App = () => {
     }
   ]
 
-  const courseComponents = courses.map(course => <Course key={course.id} course={course} />)
+  const courseComponents = courses.map(course => <Course key={course.id} course={course} />);
   return courseComponents;
 }
 
