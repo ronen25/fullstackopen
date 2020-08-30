@@ -15,6 +15,16 @@ const App = () => {
 
   const onAddClick = (event) => {
     event.preventDefault();
+
+    // Try to find a duplicate
+    if (persons.find(person => person.name === newName)) {
+      alert(`${newName} already exists in the phonebook.`);
+      return;
+    }
+    else if (newName.length === 0) {
+      alert("Contact name field is empty.");
+      return;
+    }
   
     const personDetails = {
       name: newName
@@ -22,6 +32,7 @@ const App = () => {
   
     setPersons(persons.concat(personDetails));
     setNewName('');
+    document.getElementById("inputName").value = "";
   };
 
   return (
@@ -29,7 +40,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <form>
         <div>
-          name: <input onChangeCapture={onTextChanged}/>
+          name: <input id="inputName" onChangeCapture={onTextChanged}/>
         </div>
         <div>
           <button type="submit" onClick={onAddClick}>add</button>
