@@ -7,7 +7,7 @@ const CountryOverview = ({ details }) => {
 
     return (
         <div class="country_overview">
-            <img src={ details.flag } alt='Country flag'></img>
+            <img src={ details.flag } alt='Country flag' align='top'></img>
 
             <div id="details">
                 <h2>{ details.name }</h2>

@@ -3,7 +3,7 @@
     grid-template-columns: 20% auto;
     gap: 5px;
 
-    align-items: stretch;
+    align-items: start;
     justify-items: stretch;
 }
 
