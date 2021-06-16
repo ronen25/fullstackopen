@@ -5,7 +5,7 @@ import Persons from './components/Persons';
 import SearchFilter from './components/SearchFilter';
 import PersonForm from './components/PersonForm';
 
-const axios = require('axios');
+import { getAllData } from './PhonebookService';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -13,15 +13,14 @@ const App = () => {
 
   const onFilterChanged = (event) => setFilter(event.target.value);
 
-  // Hook for fetching data from json server
-  const effectGetData = () => {
-    axios
-      .get('http://localhost:3001/persons')
-      .catch(error => alert(error))
-      .then(response => setPersons(response.data));
-  };
-
-  useEffect(effectGetData, []);
+  // Hook the service
+  useEffect(() => {
+    getAllData()
+      .then(result => {
+        setPersons(result);
+      })
+      .catch(err => alert(err));
+  }, []);
 
   return (
     <div>

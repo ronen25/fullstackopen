@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
 
-const axios = require('axios');
+import { addNewPerson } from '../PhonebookService';
 
 const PersonForm = ({ persons, setPersons }) => {
     const [newName, setNewName] = useState('');
@@ -38,10 +38,8 @@ const PersonForm = ({ persons, setPersons }) => {
         };
 
         // Put the data in the server
-        axios
-            .post('http://localhost:3001/persons', personDetails)
-            .then(response => console.log(response))
-            .catch(error => alert(error));
+        addNewPerson(personDetails)
+            .catch(err => alert(err));
 
         setPersons(persons.concat(personDetails));
         resetInputs();
