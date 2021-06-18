@@ -39,8 +39,8 @@ const PersonForm = ({ persons, setPersons }) => {
     // Put the data in the server
     addNewPerson(personDetails)
       .then((_) => {
-        persons = persons.concat(personDetails);
-        setPersons(persons);
+        const newPersons = persons.concat(personDetails);
+        setPersons(newPersons);
       })
       .catch((err) => alert(err));
 
