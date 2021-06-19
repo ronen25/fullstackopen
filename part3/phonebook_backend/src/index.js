@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const port = 3001;
 
-const notes = [
+let notes = [
   {
     id: 1,
     name: 'Ronen L',
@@ -28,12 +28,22 @@ app.get('/api/persons', (request, response) => {
 app.get('/api/persons/:id', (request, response) => {
   // Find the ID in the notes
   const note = notes.find((item) => item.id === Number(request.params.id));
-  console.log(note);
   if (!note) {
     return response.status(404).end();
   }
 
   response.json(note);
+});
+
+app.delete('/api/persons/:id', (request, response) => {
+  const note = notes.find((item) => item.id === Number(request.params.id));
+  if (!note) {
+    return response.status(404).end();
+  }
+
+  notes = notes.filter((item) => item.id !== note.id);
+
+  response.status(204).end();
 });
 
 app.get('/info', (request, response) => {
