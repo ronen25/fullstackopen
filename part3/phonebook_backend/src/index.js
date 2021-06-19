@@ -25,6 +25,17 @@ app.get('/api/persons', (request, response) => {
   response.json(notes);
 });
 
+app.get('/api/persons/:id', (request, response) => {
+  // Find the ID in the notes
+  const note = notes.find((item) => item.id === Number(request.params.id));
+  console.log(note);
+  if (!note) {
+    return response.status(404).end();
+  }
+
+  response.json(note);
+});
+
 app.get('/info', (request, response) => {
   const thisDate = new Date();
   response.set('Content-Type', 'text/html');
