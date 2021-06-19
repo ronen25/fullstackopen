@@ -3,6 +3,10 @@ const express = require('express');
 const app = express();
 const port = 3001;
 
+const generateID = () => {
+  return Math.floor(Math.random() * 100000) + 1;
+};
+
 let notes = [
   {
     id: 1,
@@ -20,6 +24,8 @@ let notes = [
     number: '53-346536',
   },
 ];
+
+app.use(express.json());
 
 app.get('/api/persons', (request, response) => {
   response.json(notes);
@@ -44,6 +50,13 @@ app.delete('/api/persons/:id', (request, response) => {
   notes = notes.filter((item) => item.id !== note.id);
 
   response.status(204).end();
+});
+
+app.post('/api/persons', (request, response) => {
+  const contact = { ...request.body, id: generateID() };
+  notes = notes.concat(contact);
+
+  response.status(200).end();
 });
 
 app.get('/info', (request, response) => {
