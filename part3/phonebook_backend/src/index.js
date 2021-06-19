@@ -25,6 +25,15 @@ app.get('/api/persons', (request, response) => {
   response.json(notes);
 });
 
+app.get('/info', (request, response) => {
+  const thisDate = new Date();
+  response.set('Content-Type', 'text/html');
+
+  response.write(`Phonebook has info for ${notes.length} people.`);
+  response.write('\r\n\r\n');
+  response.end(thisDate.toString());
+});
+
 // Start server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
