@@ -53,7 +53,19 @@ app.delete('/api/persons/:id', (request, response) => {
 });
 
 app.post('/api/persons', (request, response) => {
-  const contact = { ...request.body, id: generateID() };
+  const payload = request.body;
+
+  // Name or number missing
+  if (!payload.hasOwnProperty('name') || !payload.hasOwnProperty('number')) {
+    response.status(400).send({ error: 'Missing name or number' });
+  }
+
+  // Check for duplicate name
+  if (notes.findIndex((item) => item.name === payload.name) != -1) {
+    response.status(400).send({ error: `Duplicate entry for name ${payload.name}` });
+  }
+
+  const contact = { ...payload, id: generateID() };
   notes = notes.concat(contact);
 
   response.status(200).end();
