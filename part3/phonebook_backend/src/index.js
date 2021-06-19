@@ -26,8 +26,23 @@ let notes = [
   },
 ];
 
-app.use(morgan('tiny'));
 app.use(express.json());
+
+// Configure morgan
+app.use(
+  morgan((tokens, request, response) => {
+    return [
+      tokens.method(request, response),
+      tokens.url(request, response),
+      tokens.status(request, response),
+      tokens.res(request, response, 'content-length'),
+      '-',
+      tokens['response-time'](request, response),
+      'ms',
+      request.method === 'POST' ? JSON.stringify(request.body) : '',
+    ].join(' ');
+  })
+);
 
 app.get('/api/persons', (request, response) => {
   response.json(notes);
