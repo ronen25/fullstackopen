@@ -19,7 +19,7 @@ if (process.argv.length === 3) {
   Contact.find({}).then((result) => {
     console.log(`Total ${result.length} results`);
     result.forEach((contact) => {
-      console.log(contact);
+      console.log(`${contact.name}\t${contact.phone}`);
     });
 
     mongoose.connection.close();
