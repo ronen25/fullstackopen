@@ -1,5 +1,7 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
+
 const Database = require('./database');
 
 const app = express();
@@ -11,8 +13,13 @@ async function main() {
   await db.connectToDatabase();
 
   app.use(express.json());
+  app.use(
+    cors({
+      origin: 'http://localhost:3000',
+    })
+  );
 
-  app.get('/api/persons', async (request, response) => {
+  app.get('/persons', async (request, response) => {
     const { results, error } = await db.fetchPersons();
     if (error) {
       return response.status(400).json(error);
@@ -21,7 +28,7 @@ async function main() {
     return response.status(200).json(results);
   });
 
-  app.get('/api/persons/:id', async (request, response) => {
+  app.get('/persons/:id', async (request, response) => {
     const { result, error } = await db.fetchPerson(request.body.id);
     if (error) {
       return response.status(400).json(error);
@@ -30,10 +37,14 @@ async function main() {
     return response.status(200).json(result);
   });
 
-  app.delete('/api/persons/:id', (request, response) => {});
+  app.delete('/persons/:id', async (request, response) => {
+    const { result, error } = await db.deletePerson(request.body.id);
+    if (error) {
+      return response.status(500).json(error);
+    }
+  });
 
-  app.post('/api/persons', async (request, response) => {
-    console.log(request.body);
+  app.post('/persons', async (request, response) => {
     const { result, error } = await db.addPerson(request.body);
     if (error) {
       return response.status(400).json(error);

@@ -72,6 +72,16 @@ class Database {
         return { result: null, error };
       });
   }
+
+  async deletePerson(id) {
+    return this.Contact.deleteOne({ _id: id })
+      .then((result) => {
+        return { results: result, error: null };
+      })
+      .catch((error) => {
+        return { results: null, error: error };
+      });
+  }
 }
 
 module.exports = Database;
