@@ -1,10 +1,8 @@
 const config = require('./utils/config');
 
-const http = require('http');
 const express = require('express');
 const app = express();
 const cors = require('cors');
-const mongoose = require('mongoose');
 
 const { router } = require('./utils/middleware');
 const { Blogs } = require('./controllers/blogs');

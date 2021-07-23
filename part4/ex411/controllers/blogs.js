@@ -9,7 +9,7 @@ class Blogs {
         useFindAndModify: false,
         useCreateIndex: true,
       })
-      .then((_) => {
+      .then(() => {
         console.log('Connected to MongoDB.');
       })
       .catch((error) => {
