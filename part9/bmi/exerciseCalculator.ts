@@ -66,4 +66,9 @@ const calculateExercises = (data: Array<number>): ExerciseStats => {
     };
 };
 
-console.log(calculateExercises([3, 0, 2, 4.5, 0, 3, 1]));
+if (process.argv.length < 2) {
+    throw new Error("Usage: calculateExercises [EXERCISE DATA]");
+}
+
+const realArgs = process.argv.slice(2).map((dataPoint) => Number(dataPoint));
+console.log(calculateExercises(realArgs));
