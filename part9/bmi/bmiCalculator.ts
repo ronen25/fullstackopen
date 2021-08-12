@@ -19,12 +19,4 @@ const calculateBmi = (height: number, mass: number): string => {
         return "Obese (Class III)";
 };
 
-// Check commandline args
-if (process.argv.length != 4) {
-    throw new Error('Usage: bmiCalculator HEIGHT WEIGHT');
-}
-
-const height = parseInt(process.argv[2]);
-const weight = parseInt(process.argv[3]);
-
-console.log(calculateBmi(height, weight));
+export default calculateBmi;
