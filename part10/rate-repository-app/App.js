@@ -1,11 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Pressable, Alert } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app! Woohoo!</Text>
+      <Text>Open up App.js to start working on your application!</Text>
+      <Pressable onPress={() => Alert.alert('alla')}>
+        <Text>TEST</Text>
+      </Pressable>
       <StatusBar style='auto' />
     </View>
   );
